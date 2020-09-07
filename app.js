@@ -2,12 +2,13 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const userRoutes = require('./routes/user');
 
 mongoose.connect('mongodb+srv://adem29:adem13200@cluster0.dseuq.mongodb.net/<dbname>?retryWrites=true&w=majority',
 { useNewUrlParser: true,
-useUnifiedTopology: true })
-.then(() => console.log('Connexion à MongoDB réussie !'))
-.catch(() => console.log('Connexion à MongoDB échouée !'));
+    useUnifiedTopology: true })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,8 +19,6 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-app.use((req, res) => {
-    res.json({ message: 'Votre requête a bien été reçue !!' }); 
-});
+app.use('/api/auth', userRoutes);
 
-module.exports = app;
+module.exports = app; 
